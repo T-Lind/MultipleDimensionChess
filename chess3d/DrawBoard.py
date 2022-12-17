@@ -25,4 +25,4 @@ def draw_board():
         for j in range(-8, 9, 2):
             delimiters.append(box(pos=vector(8, i, j), size=vector(16, thk, thk), color=color.black, opacity=0.5))
 
-    box(pos=vector(0, 0, 0), size=vector(thk, thk, thk), color=color.green, opacity=1)
+    box(pos=vector(0, -8, -8), size=vector(thk, thk, thk), color=color.green, opacity=1)
