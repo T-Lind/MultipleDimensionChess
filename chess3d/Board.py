@@ -5,6 +5,7 @@ from chess3d.Pieces import Piece
 WHITE = Piece.WHITE
 BLACK = Piece.BLACK
 
+
 # First index is x axis (away from pieces), second is y (vertical), second is z (along pieces)
 class Board:
     def __init__(self):
@@ -18,6 +19,11 @@ class Board:
             self.array[i][7][6] = BLACK.PAWN
             self.array[i][6][7] = BLACK.PAWN
 
+        self.array[0][0][0] = WHITE.ROOK
+        self.array[0][0][7] = WHITE.ROOK
+
+        self.array[0][7][0] = BLACK.ROOK
+        self.array[0][7][7] = BLACK.ROOK
 
     def print(self, i):
         for row in self.array[i]:
