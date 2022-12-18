@@ -1,7 +1,7 @@
 from vpython import *
 
 
-def draw_board():
+def draw_board() -> None:
     scene = canvas()
     scene.caption = "3D Chess using VPython"
     scene.userpan = True
