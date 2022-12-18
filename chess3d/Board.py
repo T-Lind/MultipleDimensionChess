@@ -20,10 +20,24 @@ class Board:
             self.array[i][6][7] = BLACK.PAWN
 
         self.array[0][0][0] = WHITE.ROOK
-        self.array[0][0][7] = WHITE.ROOK
+        self.array[7][0][0] = WHITE.ROOK
 
-        self.array[0][7][0] = BLACK.ROOK
+        self.array[1][0][0] = WHITE.KNIGHT
+        self.array[2][0][0] = WHITE.BISHOP
+        self.array[3][0][0] = WHITE.QUEEN
+        self.array[4][0][0] = WHITE.KING
+        self.array[5][0][0] = WHITE.BISHOP
+        self.array[6][0][0] = WHITE.KNIGHT
+
         self.array[0][7][7] = BLACK.ROOK
+        self.array[7][7][7] = BLACK.ROOK
+
+        self.array[1][7][7] = BLACK.KNIGHT
+        self.array[2][7][7] = BLACK.BISHOP
+        self.array[3][7][7] = BLACK.QUEEN
+        self.array[4][7][7] = BLACK.KING
+        self.array[5][7][7] = BLACK.BISHOP
+        self.array[6][7][7] = BLACK.KNIGHT
 
     def print(self, i):
         for row in self.array[i]:

@@ -1,5 +1,6 @@
 from vpython import *
 
+
 def draw_board():
     scene = canvas()
     scene.caption = "3D Chess using VPython"
