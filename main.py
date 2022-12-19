@@ -33,7 +33,7 @@ def draw_bishop(x, y, z, color_str):
     x, y, z = reorient_offset(x, y, z)
     # sphere(pos=vector(x, y, z), size=vector(1, 1.5, 1), color=full_color[color_str])
     cylinder(pos=vector(x, y-0.7, z), size=vector(0.5, 0.75, 1), axis=vector(0, 1, 0), color=full_color[color_str])
-    sphere(pos=vector(x, y, z+0.1), size=vector(1.5, 0.75, 1), axis=vector(0, 1, 0), color=full_color[color_str])
+    sphere(pos=vector(x, y+0.1, z), size=vector(1.5, 0.75, 1), axis=vector(0, 1, 0), color=full_color[color_str])
 
 def draw_pawn(x, y, z, color_str):
     x, y, z = reorient_offset(x, y, z)
