@@ -8,7 +8,7 @@ WHITE = Piece.WHITE
 BLACK = Piece.BLACK
 
 
-# First index is x axis (away from pieces), second is y (vertical), second is z (along pieces)
+# First index is x axis (along pieces), second is y (vertical), third is z (away from pieces)
 class Board:
     def __init__(self):
         self.array = np.full((8, 8, 8), Piece.NONE(), dtype=Piece)

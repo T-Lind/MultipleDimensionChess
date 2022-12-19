@@ -17,13 +17,13 @@ def draw_board() -> None:
     delimiters = []
 
     for i in range(2, 15, 2):
-        verticals.append(box(pos=vector(i, 0, 0), size=vector(thk, s2, s3), color=color.blue, opacity=0.3))
+        verticals.append(box(pos=vector(i, 0, 0), size=vector(thk, s2, s3), color=color.blue, opacity=0.3, emissivity=True))
         local_light(pos=vector(i, 0, 0), color=color.white)
 
     for i in range(-6, 7, 2):
-        horizontals.append(box(pos=vector(8, i, 0), size=vector(s2, thk, s3), color=color.red, opacity=0.3))
+        horizontals.append(box(pos=vector(8, i, 0), size=vector(s2, thk, s3), color=color.red, opacity=0.3, emissivity=True))
 
         for j in range(-8, 9, 2):
-            delimiters.append(box(pos=vector(8, i, j), size=vector(16, thk, thk), color=color.black, opacity=0.5))
+            delimiters.append(box(pos=vector(8, i, j), size=vector(16, thk, thk), color=color.black, opacity=0.5, emissivity=True))
 
-    box(pos=vector(0, -8, -8), size=vector(thk, thk, thk), color=color.green, opacity=1)
+    box(pos=vector(0, -8, -8), size=vector(thk, thk, thk), color=color.green, opacity=1, emissivity=True)
