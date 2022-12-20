@@ -79,24 +79,21 @@ class Board:
         else:
             raise MovementException("Piece selected to move was not of correct type")
 
-    @DeprecationWarning
     def move(self, player, pos, to) -> None:
         # Only move if the starting location selected is of the type specified
         if self.check_filled(player, *pos):
-            # Only move to the other position if it is not filled with a piece of the same type
-            if not self.check_filled(player, *to):
+            if self.is_legal_movement(pos, to):
                 if self.check_filled(Piece.opposite(player), *to):
                     # Keep track of material score when capturing
-                    self.captured_material[player.string[0]] += self.get(*to).material
-                if self.is_legal_movement(pos, to, self.get(*pos)):
-                    # Move the piece from `pos` to `to`
-                    self.set(*to, self.get(*pos))
+                    self.captured_material[player.type] += self.get(*to).material
+
+                self.set(*to, self.get(*pos))
+                self.set(*pos, Piece.NONE)
             else:
-                raise MovementException("Location selected to move is filled with the same piece color")
+                raise MovementException("Illegal movement given!")
         else:
             raise MovementException("Piece selected to move was not of correct type")
 
-    @DeprecationWarning
     def is_legal_movement(self, pos, to) -> bool:
         piece = self.get(*pos)
         # TODO: Finish this legal movement code, need to do for pawns, bishops, knights, and queens
