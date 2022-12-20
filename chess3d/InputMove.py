@@ -21,7 +21,8 @@ def make_move(board, player) -> bool:
     if min([x0, y0, z0, x1, y1, z1]) == -1:
         return False
 
-    board.unprotected_move(player, (x0, y0, z0), (x1, y1, z1))
+    # board.unprotected_move(player, (x0, y0, z0), (x1, y1, z1))
+    board.move_piece(player, (x0, y0, z0), (x1, y1, z1))
 
     return True
 

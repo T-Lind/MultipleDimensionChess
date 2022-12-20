@@ -79,31 +79,28 @@ class Board:
         else:
             raise MovementException("Piece selected to move was not of correct type")
 
-    def move(self, player, pos, to) -> None:
+    def move_piece(self, player, pos, to) -> None:
         # Only move if the starting location selected is of the type specified
         if self.check_filled(player, *pos):
             if self.is_legal_movement(pos, to):
                 if self.check_filled(Piece.opposite(player), *to):
                     # Keep track of material score when capturing
                     self.captured_material[player.type] += self.get(*to).material
-
                 self.set(*to, self.get(*pos))
                 self.set(*pos, Piece.NONE)
             else:
-                raise MovementException("Illegal movement given!")
+                print("Illegal Movement!")
         else:
             raise MovementException("Piece selected to move was not of correct type")
 
     def is_legal_movement(self, pos, to) -> bool:
         piece = self.get(*pos)
+        print(piece)
+
         # TODO: Finish this legal movement code, need to do for pawns, bishops, knights, and queens
-        pos_set = set(pos)
-        to_set = set(to)
-        # Coordinates should not be the same.
-        if pos == to:
-            return False
+
         # Coordinates should not be out of bounds
-        if min(pos_set.union(to_set)) < 0 or max(pos_set.union(to_set)) > 7:
+        if min(pos + to) < 0 or max(pos + to) > 7:
             return False
 
         # Pawn case
@@ -141,9 +138,8 @@ class Board:
 
         # Bishop case
         elif piece.string[1] == "B":
-            differences = [pos[i] - to[i] for i in range(3)]
-            return True
-            # TODO: Finish bishop analyzing
+            differences = [abs(pos[i] - to[i]) for i in range(3)]
+            return differences.count(differences[0]) == 3
 
         # Knight case
         if piece.string[1] == "N":
@@ -160,7 +156,13 @@ class Board:
             hypot1 = hypot(to[0] - pos[0], to[1] - pos[1])
             hypot2 = hypot(to[0] - pos[0], to[2] - pos[2])
             distance = hypot(hypot1, hypot2) - 1E-7  # Subtracting term is for floating point errors
-            print("Distance", distance)
             return distance < 2
+
+        elif piece.string[1] == "Q":
+            differences = [abs(pos[i] - to[i]) for i in range(3)]
+            print(differences)
+            if differences.count(differences[0]) == 3:
+                return True
+            return sum(x == y for x, y in zip(pos, to)) > 1
 
         raise MovementException("Uncaught piece movement check exception!")
