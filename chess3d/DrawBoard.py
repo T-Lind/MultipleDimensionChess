@@ -1,7 +1,7 @@
 from vpython import *
 
 
-def draw_board() -> None:
+def draw_board(board) -> None:
     scene = canvas()
     scene.caption = "3D Chess using VPython"
     scene.userpan = True
@@ -27,3 +27,9 @@ def draw_board() -> None:
             delimiters.append(box(pos=vector(8, i, j), size=vector(16, thk, thk), color=color.black, opacity=0.5, emissivity=True))
 
     box(pos=vector(0, 8, -8), size=vector(thk, thk, thk), color=color.green, opacity=1, emissivity=True)
+
+    for x in range(8):
+        for y in range(8):
+            for z in range(8):
+                board.active_material.append(board.get(x, y, z))
+                board.draw_piece(x, y, z, board.get(x, y, z))

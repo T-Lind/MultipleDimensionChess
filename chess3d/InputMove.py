@@ -41,4 +41,4 @@ def black_move(board: Board):
     while not completed:
         print("ERROR: INVALID MOVE SPECIFIED. TRY AGAIN.")
         completed = make_move(board, BLACK)
-
+    board.move += 1

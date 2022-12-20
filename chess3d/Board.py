@@ -105,20 +105,10 @@ class Board:
 
         # Pawn case
         if piece.string[1] == "P":
+            differences = [pos[i] - to[i] for i in range(3)]
             if piece.string[0] == "w":
-                # White case
-                if pos[2] != to[2]:
-                    # If the piece is not black then it is an illegal move
-                    if self.get(*to).string[0] != "b":
-                        return False
-                    # TODO: Check and see if the take is valid
-                else:
-                    if self.move == 0:
-                        # TODO: Implement moving two spaces in first move
-                        pass
-                    # Not a take - moving one away in either direction
-                    if to[0] - pos[0] == 1 ^ to[1] - pos[1] == 1:
-                        return True
+                if self.move == 1:
+                    pass
 
 
             elif piece.string[0] == "b":
@@ -143,7 +133,8 @@ class Board:
 
         # Knight case
         if piece.string[1] == "N":
-            return True  # TODO: Implement knight movement check
+            differences = [abs(pos[i] - to[i]) for i in range(3)]
+            return differences.count(0) == 1 and differences.count(1) == 1 and differences.count(2) == 1
 
         # Rook case
         elif piece.string[1] == "R":
@@ -160,7 +151,6 @@ class Board:
 
         elif piece.string[1] == "Q":
             differences = [abs(pos[i] - to[i]) for i in range(3)]
-            print(differences)
             if differences.count(differences[0]) == 3:
                 return True
             return sum(x == y for x, y in zip(pos, to)) > 1

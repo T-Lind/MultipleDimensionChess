@@ -6,13 +6,13 @@ from chess3d.InputMove import black_move, white_move
 
 if __name__ == '__main__':
     board = Board()
-    draw_board()
+    draw_board(board)
 
     while True:
-        reset_graphics(board)
         white_move(board)
         reset_graphics(board)
         black_move(board)
+        reset_graphics(board)
 
         response = input("Press enter to continue or \"e\" to exit")
         if response.lower() == "e":
