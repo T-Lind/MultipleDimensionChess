@@ -1,8 +1,9 @@
-import numpy as np
 from math import hypot
 
-from chess3d.Pieces import Piece
+import numpy as np
+
 from chess3d.Exceptions import MovementException
+from chess3d.Pieces import Piece
 
 WHITE = Piece.WHITE
 BLACK = Piece.BLACK
@@ -21,9 +22,11 @@ class Board:
         for i in range(8):
             self.array[i][1][0] = WHITE.PAWN()
             self.array[i][0][1] = WHITE.PAWN()
+            self.array[i][1][1] = WHITE.PAWN()
 
             self.array[i][7][6] = BLACK.PAWN()
             self.array[i][6][7] = BLACK.PAWN()
+            self.array[i][6][6] = BLACK.PAWN()
 
         self.array[0][0][0] = WHITE.ROOK()
         self.array[7][0][0] = WHITE.ROOK()
@@ -65,6 +68,18 @@ class Board:
     def check_filled(self, player, x, y, z) -> bool:
         return self.array[x][y][z].string[0] == player.type
 
+    def unprotected_move(self, player, pos, to) -> None:
+        # Only move if the starting location selected is of the type specified
+        if self.check_filled(player, *pos):
+            if self.check_filled(Piece.opposite(player), *to):
+                # Keep track of material score when capturing
+                self.captured_material[player.type] += self.get(*to).material
+            self.set(*to, self.get(*pos))
+            self.set(*pos, Piece.NONE)
+        else:
+            raise MovementException("Piece selected to move was not of correct type")
+
+    @DeprecationWarning
     def move(self, player, pos, to) -> None:
         # Only move if the starting location selected is of the type specified
         if self.check_filled(player, *pos):
@@ -81,6 +96,7 @@ class Board:
         else:
             raise MovementException("Piece selected to move was not of correct type")
 
+    @DeprecationWarning
     def is_legal_movement(self, pos, to) -> bool:
         piece = self.get(*pos)
         # TODO: Finish this legal movement code, need to do for pawns, bishops, knights, and queens
