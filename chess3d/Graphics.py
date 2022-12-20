@@ -1,10 +1,8 @@
 from vpython import *
-from chess3d import draw_board, draw_piece
-from chess3d.Board import WHITE, BLACK
+
+from chess3d.Pieces import Piece
 
 full_color = {"w": color.white, "b":color.black}
-
-
 def reorient_offset(x, y, z):
     x *= 2
     y *= 2.05
@@ -61,24 +59,16 @@ def draw_king(x, y, z, color_str):
     box(pos=vector(x, y+0.1, z), size=vector(0.3, 1.5, 0.3), color=color.yellow)
     box(pos=vector(x, y+0.5, z), size=vector(0.3, 0.3, 0.75), color=color.yellow)
 
-if __name__ == '__main__':
-    draw_board()
 
-    p = BLACK.BISHOP()
-    draw_piece(4, 7, 3, p)
+draw_function = {
+    "P": draw_pawn,
+    "N": draw_knight,
+    "B": draw_bishop,
+    "R": draw_rook,
+    "Q": draw_queen,
+    "K": draw_king
+}
 
-    # draw_king(0, 0, 0, "w")
-    #
-    # # +X
-    # draw_rook(7, 0, 0, "w")
-    #
-    # # +Y
-    # draw_queen(0, 6, 0, "w")
-    #
-    # # +Z
-    # draw_bishop(0, 0, 7, "w")
-    #
-    #
-    # draw_pawn(7, 7, 7, "w")
 
-    input()
+def draw_piece(x, y, z, piece):
+    return draw_function[piece.string[1]](x, y, z, piece.string[0])
