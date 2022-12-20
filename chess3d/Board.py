@@ -106,6 +106,7 @@ class Board:
         if min(pos_set.union(to_set)) < 0 or max(pos_set.union(to_set)) > 7:
             return False
 
+        # Pawn case
         if piece.string[1] == "P":
             if piece.string[0] == "w":
                 # White case
@@ -138,9 +139,15 @@ class Board:
                     if to[0] - pos[0] == -1 ^ to[1] - pos[1] == -1:
                         return True
 
+        # Bishop case
         elif piece.string[1] == "B":
             differences = [pos[i] - to[i] for i in range(3)]
+            return True
             # TODO: Finish bishop analyzing
+
+        # Knight case
+        if piece.string[1] == "N":
+            return True  # TODO: Implement knight movement check
 
         # Rook case
         elif piece.string[1] == "R":
@@ -155,3 +162,5 @@ class Board:
             distance = hypot(hypot1, hypot2) - 1E-7  # Subtracting term is for floating point errors
             print("Distance", distance)
             return distance < 2
+
+        raise MovementException("Uncaught piece movement check exception!")
