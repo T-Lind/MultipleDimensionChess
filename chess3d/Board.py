@@ -97,8 +97,6 @@ class Board:
         piece = self.get(*pos)
         print(piece)
 
-        # TODO: Finish this legal movement code, need to do for pawns only now
-
         # Coordinates should not be out of bounds
         if min(pos + to) < 0 or max(pos + to) > 7:
             return False
@@ -106,46 +104,61 @@ class Board:
         # Pawn case
         if piece.string[1] == "P":
             differences = [pos[i] - to[i] for i in range(3)]
-
+            piece.move += 1
             if piece.string[0] == "w":
-                if self.move == 1:
-                    if 0 <= differences[1] <= 2 and 0 <= differences[2] <= 2 and differences[0] == 0:
+                if piece.move == 1:
+                    if 0 <= -differences[1] <= 2 and 0 <= -differences[2] <= 2 and differences[0] == 0 and \
+                            self.get(*to).string[0] != 'b':
                         # Move down and away from starting
                         return True
                     return False
                 else:
+                    print(differences)
+
                     # After the first move benefit, must move one in either/or direction
-                    if 0 <= differences[1] <= 1 and 0 <= differences[2] <= 1:
+                    if 0 <= -differences[1] <= 1 and 0 <= -differences[2] <= 1:
                         # If trying to move in x dimension - can only do while taking
                         if abs(differences[0]) == 1:
                             if self.get(*to).string[0] == "b":
                                 # Capturing a black piece - this is valid
+                                print(1)
                                 return True
-                            else:
+                            elif self.get(*to).string[0] != 'b':
                                 # Not capturing so invalid movement
+                                print(2)
                                 return False
+                            else:
+                                print(3)
+                                return True
                         # Just a normal move so yes, it's fine
+                        print(4)
                         return True
                     # Invalid move to begin with
+                    print(5)
                     return False
 
             if piece.string[0] == "b":
-                if self.move == 1:
-                    if -2 <= differences[1] <= 0 and -2 <= differences[2] <= 0 and differences[0] == 0:
-                        # Move down and away from starting
+                if piece.move == 1:
+                    if 0 <= differences[1] <= 2 and 0 <= differences[2] <= 2 and differences[0] == 0 and \
+                            self.get(*to).string[0] != 'b':
+                        # Move up and away from starting
                         return True
                     return False
                 else:
+                    print(differences)
+
                     # After the first move benefit, must move one in either/or direction
-                    if -1 <= differences[1] <= 0 and -1 <= differences[2] <= 0:
+                    if 0 <= differences[1] <= 1 and 0 <= differences[2] <= 1:
                         # If trying to move in x dimension - can only do while taking
                         if abs(differences[0]) == 1:
                             if self.get(*to).string[0] == "w":
                                 # Capturing a black piece - this is valid
                                 return True
-                            else:
+                            elif self.get(*to).string[0] != 'w':
                                 # Not capturing so invalid movement
                                 return False
+                            else:
+                                return True
                         # Just a normal move so yes, it's fine
                         return True
                     # Invalid move to begin with

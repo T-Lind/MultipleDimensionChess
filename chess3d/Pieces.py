@@ -14,6 +14,7 @@ class Piece:
             def __init__(self):
                 self.string = "wP"
                 self.material = 1
+                self.move = 0
 
         class KNIGHT:
             def __init__(self):
@@ -47,6 +48,7 @@ class Piece:
             def __init__(self):
                 self.string = "bP"
                 self.material = 1
+                self.move = 0
 
         class KNIGHT:
             def __init__(self):
