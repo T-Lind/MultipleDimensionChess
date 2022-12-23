@@ -86,3 +86,37 @@ def draw_piece(x, y, z, piece):
         return draw_function[piece.string[1]](x, y, z, piece.string[0])
     except Exception as _:
         pass
+
+def draw_board(board) -> None:
+    scene = canvas()
+    scene.caption = "3D Chess using VPython"
+    scene.userpan = True
+    scene.userspin = True
+
+    side = 8
+    thk = 0.1
+    s2 = 2 * side - thk
+    s3 = 2 * side + thk
+
+    verticals = []
+    horizontals = []
+    delimiters = []
+
+    for i in range(2, 15, 2):
+        verticals.append(box(pos=vector(i, 0, 0), size=vector(thk, s2, s3), color=color.blue, opacity=0.3, emissivity=True))
+        local_light(pos=vector(i, 0, 0), color=color.white)
+
+    for i in range(-6, 7, 2):
+        horizontals.append(box(pos=vector(8, i, 0), size=vector(s2, thk, s3), color=color.red, opacity=0.3, emissivity=True))
+
+        for j in range(-8, 9, 2):
+            delimiters.append(box(pos=vector(8, i, j), size=vector(16, thk, thk), color=color.black, opacity=0.5, emissivity=True))
+
+    box(pos=vector(0, 8, -8), size=vector(thk, thk, thk), color=color.green, opacity=1, emissivity=True)
+
+    for x in range(8):
+        for y in range(8):
+            for z in range(8):
+                active_material.append(board.get(x, y, z))
+                draw_piece(x, y, z, board.get(x, y, z))
+

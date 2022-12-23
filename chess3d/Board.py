@@ -97,7 +97,7 @@ class Board:
         piece = self.get(*pos)
         print(piece)
 
-        # TODO: Finish this legal movement code, need to do for pawns, bishops, knights, and queens
+        # TODO: Finish this legal movement code, need to do for pawns only now
 
         # Coordinates should not be out of bounds
         if min(pos + to) < 0 or max(pos + to) > 7:
@@ -106,25 +106,50 @@ class Board:
         # Pawn case
         if piece.string[1] == "P":
             differences = [pos[i] - to[i] for i in range(3)]
+
             if piece.string[0] == "w":
                 if self.move == 1:
-                    pass
-
-
-            elif piece.string[0] == "b":
-                # Black case
-                if pos[2] != to[2]:
-                    # If the piece is not white then it is an illegal move
-                    if self.get(*to).string[0] != "w":
-                        return False
-                    # TODO: Check and see if the take is valid
-                else:
-                    if self.move == 0:
-                        # TODO: Implement moving two spaces in first move
-                        pass
-                    # Not a take - moving one away in either direction
-                    if to[0] - pos[0] == -1 ^ to[1] - pos[1] == -1:
+                    if 0 <= differences[1] <= 2 and 0 <= differences[2] <= 2 and differences[0] == 0:
+                        # Move down and away from starting
                         return True
+                    return False
+                else:
+                    # After the first move benefit, must move one in either/or direction
+                    if 0 <= differences[1] <= 1 and 0 <= differences[2] <= 1:
+                        # If trying to move in x dimension - can only do while taking
+                        if abs(differences[0]) == 1:
+                            if self.get(*to).string[0] == "b":
+                                # Capturing a black piece - this is valid
+                                return True
+                            else:
+                                # Not capturing so invalid movement
+                                return False
+                        # Just a normal move so yes, it's fine
+                        return True
+                    # Invalid move to begin with
+                    return False
+
+            if piece.string[0] == "b":
+                if self.move == 1:
+                    if -2 <= differences[1] <= 0 and -2 <= differences[2] <= 0 and differences[0] == 0:
+                        # Move down and away from starting
+                        return True
+                    return False
+                else:
+                    # After the first move benefit, must move one in either/or direction
+                    if -1 <= differences[1] <= 0 and -1 <= differences[2] <= 0:
+                        # If trying to move in x dimension - can only do while taking
+                        if abs(differences[0]) == 1:
+                            if self.get(*to).string[0] == "w":
+                                # Capturing a black piece - this is valid
+                                return True
+                            else:
+                                # Not capturing so invalid movement
+                                return False
+                        # Just a normal move so yes, it's fine
+                        return True
+                    # Invalid move to begin with
+                    return False
 
         # Bishop case
         elif piece.string[1] == "B":
@@ -132,7 +157,7 @@ class Board:
             return differences.count(differences[0]) == 3
 
         # Knight case
-        if piece.string[1] == "N":
+        elif piece.string[1] == "N":
             differences = [abs(pos[i] - to[i]) for i in range(3)]
             return differences.count(0) == 1 and differences.count(1) == 1 and differences.count(2) == 1
 
